@@ -16,8 +16,7 @@ class BookingSheetController extends Controller
                 if($message['key']['fromMe'] == false){
                     $body  = FilterUpsertMessage::FormateMessage($message);
                     $phone = intval($message['key']['remoteJid']);
-                    $googel_sheet = new GoogleSheetFilterService($user_id,$instance_id,$access_token);
-                    $googel_sheet->phone   = $phone;
+                    $googel_sheet = new GoogleSheetFilterService($user_id,$phone,$instance_id,$access_token);
                     $googel_sheet->message = $body;
                     // incase bookings info reset
                     $googel_sheet->reset_booking_info();

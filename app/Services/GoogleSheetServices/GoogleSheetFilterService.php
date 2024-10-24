@@ -7,12 +7,11 @@ use Carbon\Carbon;
 class GoogleSheetFilterService extends GoogleSheetOperation {
     use AccountService;
     public $booking_sheet_words = [];
-    public $phone = null;
     public $booking_appointments = [];
     public $message = null;
     public $values_sheet = null;
     public $google_sheet;
-    public function __construct(public $user_id,public $instance_id,public $access_token){
+    public function __construct(public $user_id,public $phone,public $instance_id,public $access_token){
         parent::__construct();
         $this->google_sheet = GoogleSheetAutoReplay::where([
             'user_id' => $this->user_id,
