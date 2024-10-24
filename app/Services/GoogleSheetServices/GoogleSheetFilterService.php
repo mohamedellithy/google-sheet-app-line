@@ -130,7 +130,7 @@ class GoogleSheetFilterService extends GoogleSheetOperation {
                 ]);
 
                 $message = "رقم الحجز الخاص بك ". $this->google_sheet?->id."\n";
-                $message.= "فى حال رغبتك اعادة جدولة الحجز ارسل '#0' \n";
+                $message.= "فى حال رغبتك اعادة جدولة الحجز ارسل "."#0"."\n";
                 $this->send_message($message);
             }
             return;
