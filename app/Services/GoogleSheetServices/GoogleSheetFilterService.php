@@ -117,8 +117,7 @@ class GoogleSheetFilterService extends GoogleSheetOperation {
             $need_message = "قم بالرد بكتابة رقم الوقت المحدد \n\n";
             if(isset($this->booking_appointments[$this->message][0])):
                 foreach($this->booking_appointments as $key => $booking_times):
-                    if($booking_times[0] == $this->booking_appointments[$this->message][0]):
-                        \Log::info(json_encode($booking_times));
+                    if($booking_times[1] == $this->booking_appointments[$this->message][1]):
                         foreach($booking_times as $index => $item):
                             if(!in_array($index,[0,1])):
                                 if(!in_array($item,$prev_values_container)){
