@@ -72,6 +72,7 @@ class GoogleSheetFilterService extends GoogleSheetOperation {
         if($this->google_sheet->next_appointment == 'date'){
             $need_message = "اختيار  تاريخ الحجز المتوفر لديك \n\n";
             $need_message = "قم بالرد بكتابة رقم التاريخ المحدد \n\n";
+            $this->booking_appointments = array_unique($this->booking_appointments);
             foreach($this->booking_appointments as $key => $booking_appointment):
                 $need_message .= '#'.$key.' => '.$booking_appointment[0]."\n";
             endforeach;
