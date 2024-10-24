@@ -157,7 +157,7 @@ class GoogleSheetFilterService extends GoogleSheetOperation {
     public function next_question(){
         if($this->google_sheet?->next_question == 'end'){
             $this->google_sheet->update([
-                'current_question' => 'end'
+                'current_question' => null
             ]);
         } else {
             $next_index = $this->google_sheet->next_question + 1;
@@ -182,7 +182,7 @@ class GoogleSheetFilterService extends GoogleSheetOperation {
     }
 
     public function send_message($message){
-        if($this->google_sheet->current_question == 'end') return;
+        if($this->google_sheet->current_question == null) return;
         send_message(
             $this->phone,
             $message,
