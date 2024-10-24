@@ -46,19 +46,24 @@ class GoogleSheetFilterService extends GoogleSheetOperation {
             }
         }
         elseif($this->google_sheet->next_appointment == 'times'){
+            $question_validate_replay = 0;
             foreach($this->booking_appointments as $key => $booking_times):
                 if($booking_times[0] == $this->values_sheet['date']){
+                    $question_validate_replay = 1;
                     $this->save_data($this->google_sheet->next_appointment,$booking_times[$this->message]);
                     break;
                 }
             endforeach;
-            $this->google_sheet->update([
-                'next_appointment'    => 'end'
-            ]);
 
-            // reback to all section
-            $this->next_question();
-            $this->send_message($this->google_sheet->current_question);
+            if($question_validate_replay == 1){
+                $this->google_sheet->update([
+                    'next_appointment'    => 'end'
+                ]);
+
+                // reback to all section
+                $this->next_question();
+                $this->send_message($this->google_sheet->current_question);
+            }
         }
 
         $need_message = null;
