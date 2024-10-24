@@ -49,9 +49,11 @@ class GoogleSheetFilterService extends GoogleSheetOperation {
             $question_validate_replay = 0;
             foreach($this->booking_appointments as $key => $booking_times):
                 if($booking_times[0] == $this->values_sheet['date']){
-                    $question_validate_replay = 1;
-                    $this->save_data($this->google_sheet->next_appointment,$booking_times[$this->message]);
-                    break;
+                    if(isset($booking_times[$this->message])){
+                        $question_validate_replay = 1;
+                        $this->save_data($this->google_sheet->next_appointment,$booking_times[$this->message]);
+                        break;
+                    }
                 }
             endforeach;
 
