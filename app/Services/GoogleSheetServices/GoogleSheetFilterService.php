@@ -25,6 +25,7 @@ class GoogleSheetFilterService extends GoogleSheetOperation {
     }
 
     public function appointments(){
+        $prev_values_container = [];
         if(!isset($this->google_sheet->next_appointment)){
             $this->google_sheet->update([
                 'next_appointment'    => 'date',
@@ -73,7 +74,10 @@ class GoogleSheetFilterService extends GoogleSheetOperation {
             $need_message = "اختيار  تاريخ الحجز المتوفر لديك \n\n";
             $need_message = "قم بالرد بكتابة رقم التاريخ المحدد \n\n";
             foreach($this->booking_appointments as $key => $booking_appointment):
-                $need_message .= '#'.$key.' => '.$booking_appointment[0]."\n";
+                if(!in_array($booking_appointment[0],$prev_values_container)){
+                    $prev_values_container[] = $booking_appointment[0];
+                    $need_message .= '#'.$key.' => '.$booking_appointment[0]."\n";
+                }
             endforeach;
         } elseif($this->google_sheet->next_appointment == 'day'){
             $need_message = "اختيار يوم الحجز المتوفر لديك \n\n";
@@ -84,9 +88,12 @@ class GoogleSheetFilterService extends GoogleSheetOperation {
                         $Max_Date = strtotime('+30 days');
                         $Min_Date = strtotime("+1 days");
                         $handle_date = strtotime($booking_day[1]);
-                        if(($Max_Date >= $handle_date)){
-                            if(($Min_Date <= $handle_date)){
-                                $need_message .= '#'.$key.' => '.$booking_day[1]."\n";
+                        if(!in_array($booking_day[1],$prev_values_container)){
+                            $prev_values_container[] = $booking_day[1];
+                            if(($Max_Date >= $handle_date)){
+                                if(($Min_Date <= $handle_date)){
+                                    $need_message .= '#'.$key.' => '.$booking_day[1]."\n";
+                                }
                             }
                         }
                     }
@@ -103,7 +110,10 @@ class GoogleSheetFilterService extends GoogleSheetOperation {
                     if($booking_times[0] == $this->booking_appointments[$this->message][0]):
                         foreach($booking_times as $index => $item):
                             if(!in_array($index,[0,1])):
-                                $need_message .= '#'.$index.' => '.$item."\n";
+                                if(!in_array($item,$prev_values_container)){
+                                    $prev_values_container[] = $item;
+                                    $need_message .= '#'.$index.' => '.$item."\n";
+                                }
                             endif;
                         endforeach;
                     endif;
