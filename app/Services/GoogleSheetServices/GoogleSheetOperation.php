@@ -52,12 +52,12 @@ class GoogleSheetOperation {
         $rowData = [
             [
                 $booking_id,
-                $values_sheet['اسم العميل'],
-                $values_sheet['رقم الطلب'],
-                $values_sheet['لوحة السيارة'],
-                $values_sheet['اللوكيشن'],
-                $values_sheet['day'].' - '.$values_sheet['date'].' - '.$values_sheet['times'],
-                $values_sheet['رقم السيارة']
+                isset($values_sheet['اسم العميل']) ? $values_sheet['اسم العميل'] : "",
+                isset($values_sheet['رقم الطلب'])  ? $values_sheet['رقم الطلب'] : "",
+                isset($values_sheet['لوحة السيارة']) ? $values_sheet['لوحة السيارة'] : "",
+                isset($values_sheet['اللوكيشن']) ? $values_sheet['اللوكيشن'] : "",
+                isset($values_sheet['day']) ? $values_sheet['day'].' - '.$values_sheet['date'].' - '.$values_sheet['times'] : "",
+                isset($values_sheet['رقم السيارة']) ? $values_sheet['رقم السيارة'] : ""
             ], // Values for each column in the row
         ];
         // Prepare the request to insert the row
