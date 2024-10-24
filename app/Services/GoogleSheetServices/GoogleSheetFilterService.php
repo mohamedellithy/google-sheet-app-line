@@ -118,9 +118,7 @@ class GoogleSheetFilterService extends GoogleSheetOperation {
             if(isset($this->booking_appointments[$this->message][0])):
                 foreach($this->booking_appointments as $key => $booking_times):
                     if($booking_times[0] == $this->booking_appointments[$this->message][0]):
-                        \Log::info($this->message);
-                        \Log::info($this->booking_appointments[$this->message][0]);
-                        \Log::info($booking_times[0]);
+                        \Log::info(json_encode($booking_times));
                         foreach($booking_times as $index => $item):
                             if(!in_array($index,[0,1])):
                                 if(!in_array($item,$prev_values_container)){
