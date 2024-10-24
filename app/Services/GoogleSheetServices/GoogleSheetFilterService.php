@@ -30,12 +30,20 @@ class GoogleSheetFilterService extends GoogleSheetOperation {
                 'next_appointment'    => 'date',
             ]);
         } elseif($this->google_sheet->next_appointment == 'date'){
+            if(!isset($this->booking_appointments[$this->message][0])){
+                $this->reback_massage();
+                return;
+            }
             $this->save_data($this->google_sheet->next_appointment,$this->booking_appointments[$this->message][0]);
             $this->google_sheet->update([
                 'next_appointment'    => 'day'
             ]);
         }
         elseif($this->google_sheet->next_appointment == 'day'){
+            if(!isset($this->booking_appointments[$this->message][1])){
+                $this->reback_massage();
+                return;
+            }
             $this->save_data($this->google_sheet->next_appointment,$this->booking_appointments[$this->message][1]);
             $this->google_sheet->update([
                 'next_appointment'    => 'times'
@@ -171,6 +179,10 @@ class GoogleSheetFilterService extends GoogleSheetOperation {
         $message = "رقم الحجز الخاص بك ". $this->google_sheet?->id."\n";
         $message.= "فى حال رغبتك اعادة جدولة الحجز ارسل "."001"."\n";
         $this->send_message($message);
+    }
+
+    public function reback_massage(){
+        $this->handle();
     }
 
     public function reset_booking_info(){
