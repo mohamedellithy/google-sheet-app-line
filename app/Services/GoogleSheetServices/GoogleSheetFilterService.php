@@ -118,7 +118,7 @@ class GoogleSheetFilterService extends GoogleSheetOperation {
             }
         }
 
-        if($this->google_sheet->next_question =='end'){
+        if(($this->google_sheet->next_question =='end') && ($this->google_sheet->next_appointment =='end')){
             if($this->google_sheet->current_question != 'end'){
                 $this->insert_new_row(
                     $this->google_sheet->id,
