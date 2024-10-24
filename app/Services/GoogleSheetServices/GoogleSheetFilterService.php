@@ -184,7 +184,7 @@ class GoogleSheetFilterService extends GoogleSheetOperation {
     }
 
     public function send_message($message){
-        if($this->google_sheet->current_question == 'end') return;
+        if($message == 'end') return;
         send_message(
             $this->phone,
             $message,
