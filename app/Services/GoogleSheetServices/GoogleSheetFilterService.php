@@ -82,23 +82,33 @@ class GoogleSheetFilterService extends GoogleSheetOperation {
         } elseif($this->google_sheet->next_appointment == 'day'){
             $need_message = "اختيار يوم الحجز المتوفر لديك \n\n";
             $need_message = "قم بالرد بكتابة رقم اليوم المحدد \n\n";
-            foreach($this->booking_appointments as $key => $booking_day):
-                if($booking_day[0] == $this->booking_appointments[$this->message][0]){
-                    $need_message .= '#'.$key.' => '.$booking_day[1]."\n";
-                }
-            endforeach;
+            if(isset($this->booking_appointments[$this->message][0])):
+                foreach($this->booking_appointments as $key => $booking_day):
+                    if($booking_day[0] == $this->booking_appointments[$this->message][0]){
+                        $need_message .= '#'.$key.' => '.$booking_day[1]."\n";
+                    }
+                endforeach;
+            else:
+                $this->reback_massage();
+                return;
+            endif;
         } elseif($this->google_sheet->next_appointment == 'times'){
             $need_message = "اختيار الوقت المتوفر لديك \n\n";
             $need_message = "قم بالرد بكتابة رقم الوقت المحدد \n\n";
-            foreach($this->booking_appointments as $key => $booking_times):
-                if($booking_times[0] == $this->booking_appointments[$this->message][0]){
-                    foreach($booking_times as $index => $item){
-                        if(!in_array($index,[0,1])){
-                            $need_message .= '#'.$index.' => '.$item."\n";
-                        }
-                    }
-                }
-            endforeach;
+            if(isset($this->booking_appointments[$this->message][0])):
+                foreach($this->booking_appointments as $key => $booking_times):
+                    if($booking_times[0] == $this->booking_appointments[$this->message][0]):
+                        foreach($booking_times as $index => $item):
+                            if(!in_array($index,[0,1])):
+                                $need_message .= '#'.$index.' => '.$item."\n";
+                            endif;
+                        endforeach;
+                    endif;
+                endforeach;
+            else:
+                $this->reback_massage();
+                return;
+            endif;
         }
 
         $this->send_message(urlencode($need_message));
@@ -183,7 +193,8 @@ class GoogleSheetFilterService extends GoogleSheetOperation {
     }
 
     public function reback_massage(){
-        $this->handle();
+        $message = "الرقم الذي قمت بادخاله غير صحيح من فضلك قم بالاختيار من ضمن القائمة\n";
+        $this->send_message($message);
     }
 
     public function reset_booking_info(){
