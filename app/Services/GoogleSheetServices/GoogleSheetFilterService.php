@@ -86,6 +86,7 @@ class GoogleSheetFilterService extends GoogleSheetOperation {
             $need_message = "قم بالرد بكتابة رقم اليوم المحدد \n\n";
             if(isset($this->booking_appointments[$this->message][0])):
                 foreach($this->booking_appointments as $key => $booking_day):
+                    $this->send_message($booking_day[1]);
                     if($booking_day[0] == $this->booking_appointments[$this->message][0]){
                         $need_message .= '#'.$key.' => '.$booking_day[1]."\n";
                     }
