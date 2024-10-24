@@ -19,7 +19,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-Route::get('booking-sheet','BookingSheetController@booking_sheet');
-Route::get('sheet-service/{user_id}','BookingSheetController@booking_sheet');
-Route::post('/auto-replay/{user_id}/{instance_id}/{access_token}','BookingSheetController@auto_replay');
-Route::get('/auto-replay/{user_id}/{instance_id}/{access_token}','BookingSheetController@auto_replay');
+Route::get('booking-sheet',[BookingSheetController::class,'booking_sheet']);
+Route::get('sheet-service/{user_id}',[BookingSheetController::class,'booking_sheet']);
+Route::post('/auto-replay/{user_id}/{instance_id}/{access_token}',[BookingSheetController::class,'auto_replay']);
+Route::get('/auto-replay/{user_id}/{instance_id}/{access_token}',[BookingSheetController::class,'auto_replay']);
