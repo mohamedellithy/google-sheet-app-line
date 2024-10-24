@@ -102,6 +102,9 @@ class GoogleSheetFilterService extends GoogleSheetOperation {
                 endforeach;
 
                 if(count($have_valid_date) == 0):
+                    $this->google_sheet->update([
+                        'next_appointment'    => 'date'
+                    ]);
                     $this->novalid_massage();
                     return;
                 endif;
