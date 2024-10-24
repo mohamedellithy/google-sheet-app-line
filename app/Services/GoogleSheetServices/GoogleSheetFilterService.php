@@ -91,10 +91,8 @@ class GoogleSheetFilterService extends GoogleSheetOperation {
                         $Min_Date = strtotime("+1 days");
                         $handle_date = strtotime($booking_day[1]);
                         // && ($Min_Date <= strtotime($handle_date))
-                        if(($Max_Date >= strtotime($handle_date))){
-                            $this->send_message($Min_Date);
-                            $this->send_message(strtotime($handle_date));
-                            if(($Min_Date <= strtotime($handle_date))){
+                        if(($Max_Date >= $handle_date)){
+                            if(($Min_Date <= $handle_date)){
                                 $need_message .= '#'.$key.' => '.$booking_day[1]."\n";
                             }
                         }
