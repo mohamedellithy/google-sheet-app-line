@@ -120,18 +120,7 @@ class GoogleSheetFilterService extends GoogleSheetOperation {
 
         if(($this->google_sheet->next_question =='end') && ($this->google_sheet->next_appointment =='end')){
             if($this->google_sheet->current_question != 'end'){
-                $this->insert_new_row(
-                    $this->google_sheet->id,
-                    $this->values_sheet
-                );
-
-                $this->google_sheet->update([
-                    'current_question' => 'end'
-                ]);
-
-                $message = "رقم الحجز الخاص بك ". $this->google_sheet?->id."\n";
-                $message.= "فى حال رغبتك اعادة جدولة الحجز ارسل "."001"."\n";
-                $this->send_message($message);
+                $this->end_message();
             }
             return;
         }
@@ -156,9 +145,7 @@ class GoogleSheetFilterService extends GoogleSheetOperation {
     
     public function next_question(){
         if($this->google_sheet?->next_question == 'end'){
-            $this->google_sheet->update([
-                'current_question' => null
-            ]);
+            $this->end_message();
         } else {
             $next_index = $this->google_sheet->next_question + 1;
             $check_if_have_question = isset($this->booking_sheet_words[0][$next_index]) ? $next_index: 'end';
@@ -169,6 +156,21 @@ class GoogleSheetFilterService extends GoogleSheetOperation {
                 'next_question'    => $check_if_have_question,
             ]);
         }
+    }
+
+    public function end_message(){
+        $this->insert_new_row(
+            $this->google_sheet->id,
+            $this->values_sheet
+        );
+
+        $this->google_sheet->update([
+            'current_question' => 'end'
+        ]);
+
+        $message = "رقم الحجز الخاص بك ". $this->google_sheet?->id."\n";
+        $message.= "فى حال رغبتك اعادة جدولة الحجز ارسل "."001"."\n";
+        $this->send_message($message);
     }
 
     public function reset_booking_info(){
