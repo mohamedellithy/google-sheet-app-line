@@ -200,7 +200,7 @@ class GoogleSheetFilterService extends GoogleSheetOperation {
     }
 
     public function reset_booking_info(){
-        if($this->message == '001'){
+        if($this->message === '001'){
             if($this->google_sheet){
                 $this->delete_selected_row($this->google_sheet?->id);
                 $this->google_sheet->delete();
