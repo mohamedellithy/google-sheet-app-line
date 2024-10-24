@@ -17,7 +17,7 @@ class GoogleSheetOperation {
     }
 
     public function get_appointments(){
-        $appointments = Cache::remember('appointments',120, function (){
+        $appointments = Cache::remember('appointments_s',120, function (){
             $service      = new \Google\Service\Sheets($this->client);
             $ColumnsA     = $service->spreadsheets_values->get("1xnQe0vsH1fKAliiAWJxPou-7NPu26yMTeMxi7Sq1x3Y","Sheet1!A:A");
             $ColumnsCount = count($ColumnsA->getValues());
@@ -34,7 +34,7 @@ class GoogleSheetOperation {
     }
 
     public function booking_sheet_words(){
-        $booking_sheet_words = Cache::remember('sheet_words',120, function () {
+        $booking_sheet_words = Cache::remember('sheet_words_s',120, function () {
             $service      = new \Google\Service\Sheets($this->client);
             $ColumnsA     = $service->spreadsheets_values->get("13Jlz0AcBG3DtJcfbFjxmZ9VyXAVw2ekblJRMIi89pIk","Sheet1!1:1");
             return $ColumnsA->getValues();
