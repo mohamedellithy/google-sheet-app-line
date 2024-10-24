@@ -17,28 +17,28 @@ class GoogleSheetOperation {
     }
 
     public function get_appointments(){
-        $appointments = Cache::remember('appointments',180, function (){
+        // $appointments = Cache::remember('appointments',180, function (){
             $service      = new \Google\Service\Sheets($this->client);
             $ColumnsA     = $service->spreadsheets_values->get("1xnQe0vsH1fKAliiAWJxPou-7NPu26yMTeMxi7Sq1x3Y","Sheet1!A:A");
             $ColumnsCount = count($ColumnsA->getValues());
-            $result       = [];
+            $appointments       = [];
             for($i = 2;$i <= $ColumnsCount;$i++){
                 $ColumnItem = $service->spreadsheets_values->get("1xnQe0vsH1fKAliiAWJxPou-7NPu26yMTeMxi7Sq1x3Y","Sheet1!".$i.":".$i);
-                $result[]   = $ColumnItem->getValues()[0];
+                $appointments[]   = $ColumnItem->getValues()[0];
             }
 
-            return $result;
-        });
+            // return $appointments;
+        // });
 
         return $appointments;
     }
 
     public function booking_sheet_words(){
-        $booking_sheet_words = Cache::remember('sheet_words',180, function () {
+        //$booking_sheet_words = Cache::remember('sheet_words',180, function () {
             $service      = new \Google\Service\Sheets($this->client);
             $ColumnsA     = $service->spreadsheets_values->get("13Jlz0AcBG3DtJcfbFjxmZ9VyXAVw2ekblJRMIi89pIk","Sheet1!1:1");
-            return $ColumnsA->getValues();
-        });
+            $booking_sheet_words = $ColumnsA->getValues();
+        //});
 
         return $booking_sheet_words;
     }
