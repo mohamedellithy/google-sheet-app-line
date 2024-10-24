@@ -129,7 +129,9 @@ class GoogleSheetFilterService extends GoogleSheetOperation {
                     'current_question' => 'end'
                 ]);
 
-                $this->send_message("رقم الحجز الخاص بك ". $this->google_sheet?->id);
+                $message = "رقم الحجز الخاص بك ". $this->google_sheet?->id."\n";
+                $message.= "فى حال رغبتك اعادة جدولة الحجز ارسل 000 \n";
+                $this->send_message($message);
             }
             return;
         }
@@ -162,7 +164,7 @@ class GoogleSheetFilterService extends GoogleSheetOperation {
     }
 
     public function reset_booking_info(){
-        if($this->message == 'اعادة الحجز'){
+        if($this->message == '000'){
             if($this->google_sheet){
                 $this->delete_selected_row($this->google_sheet?->id);
                 $this->google_sheet->delete();
