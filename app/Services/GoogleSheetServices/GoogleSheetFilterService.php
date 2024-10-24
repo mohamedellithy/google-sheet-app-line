@@ -155,15 +155,20 @@ class GoogleSheetFilterService extends GoogleSheetOperation {
     }
     
     public function next_question(){
-        if($this->google_sheet?->next_question == 'end') return;
-        $next_index = $this->google_sheet->next_question + 1;
-        $check_if_have_question = isset($this->booking_sheet_words[0][$next_index]) ? $next_index: 'end';
-        $current_question = isset($this->booking_sheet_words[0][$this->google_sheet->next_question])
-        ? $this->booking_sheet_words[0][$this->google_sheet->next_question] : $this->google_sheet->current_question;
-        $this->google_sheet->update([
-            'current_question' => $current_question,
-            'next_question'    => $check_if_have_question,
-        ]);
+        if($this->google_sheet?->next_question == 'end'){
+            $this->google_sheet->update([
+                'current_question' => 'end'
+            ]);
+        } else {
+            $next_index = $this->google_sheet->next_question + 1;
+            $check_if_have_question = isset($this->booking_sheet_words[0][$next_index]) ? $next_index: 'end';
+            $current_question = isset($this->booking_sheet_words[0][$this->google_sheet->next_question])
+            ? $this->booking_sheet_words[0][$this->google_sheet->next_question] : $this->google_sheet->current_question;
+            $this->google_sheet->update([
+                'current_question' => $current_question,
+                'next_question'    => $check_if_have_question,
+            ]);
+        }
     }
 
     public function reset_booking_info(){
@@ -177,6 +182,7 @@ class GoogleSheetFilterService extends GoogleSheetOperation {
     }
 
     public function send_message($message){
+        if($this->google_sheet->current_question == 'end') return;
         send_message(
             $this->phone,
             $message,
