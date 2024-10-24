@@ -83,6 +83,7 @@ class GoogleSheetFilterService extends GoogleSheetOperation {
             $need_message = "اختيار يوم الحجز المتوفر لديك \n\n";
             $need_message = "قم بالرد بكتابة رقم اليوم المحدد \n\n";
             if(isset($this->booking_appointments[$this->message][0])):
+                $have_valid_date = [];
                 foreach($this->booking_appointments as $key => $booking_day):
                     if($booking_day[0] == $this->booking_appointments[$this->message][0]){
                         $Max_Date = strtotime('+30 days');
@@ -92,12 +93,18 @@ class GoogleSheetFilterService extends GoogleSheetOperation {
                             $prev_values_container[] = $booking_day[1];
                             if(($Max_Date >= $handle_date)){
                                 if(($Min_Date <= $handle_date)){
+                                    $have_valid_date[] = $booking_day[1];
                                     $need_message .= '#'.$key.' => '.$booking_day[1]."\n";
                                 }
                             }
                         }
                     }
                 endforeach;
+
+                if(count($have_valid_date) == 0):
+                    $this->novalid_massage();
+                    return;
+                endif;
             else:
                 $this->reback_massage();
                 return;
@@ -207,6 +214,11 @@ class GoogleSheetFilterService extends GoogleSheetOperation {
 
     public function reback_massage(){
         $message = "الرقم الذي قمت بادخاله غير صحيح من فضلك قم بالاختيار من ضمن القائمة\n";
+        $this->send_message($message);
+    }
+
+    public function novalid_massage(){
+        $message = "عذرا الاختيار غير متاح حاليا الرجاء اختيار خيار أخر";
         $this->send_message($message);
     }
 
