@@ -120,9 +120,11 @@ class GoogleSheetFilterService extends GoogleSheetOperation {
                     if($booking_times[1] == $this->booking_appointments[$this->message][1]):
                         foreach($booking_times as $index => $item):
                             if(!in_array($index,[0,1])):
-                                if(!in_array($item,$prev_values_container)){
-                                    $prev_values_container[] = $item;
-                                    $need_message .= '#'.$index.' => '.$item."\n";
+                                if(isset($item)){
+                                    if(!in_array($item,$prev_values_container)){
+                                        $prev_values_container[] = $item;
+                                        $need_message .= '#'.$index.' => '.$item."\n";
+                                    }
                                 }
                             endif;
                         endforeach;
