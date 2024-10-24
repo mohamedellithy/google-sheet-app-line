@@ -30,24 +30,20 @@ class GoogleSheetFilterService extends GoogleSheetOperation {
                 'next_appointment'    => 'date',
             ]);
         } elseif($this->google_sheet->next_appointment == 'date'){
-            if(!isset($this->booking_appointments[$this->message][0])){
-                $this->reback_massage();
-                return;
+            if(isset($this->booking_appointments[$this->message][0])){
+                $this->save_data($this->google_sheet->next_appointment,$this->booking_appointments[$this->message][0]);
+                $this->google_sheet->update([
+                    'next_appointment'    => 'day'
+                ]);
             }
-            $this->save_data($this->google_sheet->next_appointment,$this->booking_appointments[$this->message][0]);
-            $this->google_sheet->update([
-                'next_appointment'    => 'day'
-            ]);
         }
         elseif($this->google_sheet->next_appointment == 'day'){
-            if(!isset($this->booking_appointments[$this->message][1])){
-                $this->reback_massage();
-                return;
+            if(isset($this->booking_appointments[$this->message][1])){
+                $this->save_data($this->google_sheet->next_appointment,$this->booking_appointments[$this->message][1]);
+                $this->google_sheet->update([
+                    'next_appointment'    => 'times'
+                ]);
             }
-            $this->save_data($this->google_sheet->next_appointment,$this->booking_appointments[$this->message][1]);
-            $this->google_sheet->update([
-                'next_appointment'    => 'times'
-            ]);
         }
         elseif($this->google_sheet->next_appointment == 'times'){
             foreach($this->booking_appointments as $key => $booking_times):
