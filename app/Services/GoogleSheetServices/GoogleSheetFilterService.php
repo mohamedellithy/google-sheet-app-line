@@ -73,12 +73,6 @@ class GoogleSheetFilterService extends GoogleSheetOperation {
             $need_message = "اختيار  تاريخ الحجز المتوفر لديك \n\n";
             $need_message = "قم بالرد بكتابة رقم التاريخ المحدد \n\n";
             foreach($this->booking_appointments as $key => $booking_appointment):
-                // $Max_Date = strtotime('+30 days');
-                // $Min_Date = strtotime("+1 days");
-                // $handle_date = strtotime($booking_appointment[0]);
-                // if(($Max_Date >= strtotime($handle_date)) && ($Min_Date <= strtotime($handle_date))){
-                //     $need_message .= '#'.$key.' => '.$booking_appointment[0]."\n";
-                // }
                 $need_message .= '#'.$key.' => '.$booking_appointment[0]."\n";
             endforeach;
         } elseif($this->google_sheet->next_appointment == 'day'){
@@ -90,7 +84,6 @@ class GoogleSheetFilterService extends GoogleSheetOperation {
                         $Max_Date = strtotime('+30 days');
                         $Min_Date = strtotime("+1 days");
                         $handle_date = strtotime($booking_day[1]);
-                        // && ($Min_Date <= strtotime($handle_date))
                         if(($Max_Date >= $handle_date)){
                             if(($Min_Date <= $handle_date)){
                                 $need_message .= '#'.$key.' => '.$booking_day[1]."\n";
