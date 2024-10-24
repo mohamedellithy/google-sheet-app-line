@@ -15,7 +15,8 @@ class GoogleSheetFilterService extends GoogleSheetOperation {
     public function __construct(public $user_id,public $instance_id,public $access_token){
         parent::__construct();
         $this->google_sheet = GoogleSheetAutoReplay::where([
-            'user_id' => $this->user_id
+            'user_id' => $this->user_id,
+            'phone'   => $this->phone
         ])->first();
 
         $this->booking_sheet_words  = $this->booking_sheet_words();
