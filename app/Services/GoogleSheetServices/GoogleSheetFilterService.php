@@ -51,23 +51,23 @@ class GoogleSheetFilterService extends GoogleSheetOperation {
             foreach($this->booking_appointments as $key => $booking_times):
                 if($booking_times[0] == $this->values_sheet['date']){
                     if(isset($booking_times[$this->message])){
-                        if($this->validate_count_appointments()){
-                            $question_validate_replay = 1;
-                            $this->save_data($this->google_sheet->next_appointment,$booking_times[$this->message]);
-                        }
+                        $question_validate_replay = 1;
+                        $this->save_data($this->google_sheet->next_appointment,$booking_times[$this->message]);
                         break;
                     }
                 }
             endforeach;
 
-            if($question_validate_replay == 1){
-                $this->google_sheet->update([
-                    'next_appointment'    => 'end'
-                ]);
-
-                // reback to all section
-                $this->next_question();
-                $this->send_message($this->google_sheet->current_question);
+            if($this->validate_count_appointments()){
+                if($question_validate_replay == 1){
+                    $this->google_sheet->update([
+                        'next_appointment'    => 'end'
+                    ]);
+    
+                    // reback to all section
+                    $this->next_question();
+                    $this->send_message($this->google_sheet->current_question);
+                }
             }
         }
 
