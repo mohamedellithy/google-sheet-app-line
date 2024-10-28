@@ -17,8 +17,13 @@ class BookingSheetController extends Controller
                     $phone = intval($message['key']['remoteJid']);
                     $googel_sheet = new GoogleSheetFilterService($user_id,$phone,$instance_id,$access_token);
                     $googel_sheet->message = $body;
+
                     // incase bookings info reset
                     $googel_sheet->reset_booking_info();
+
+                    // incase booking cancel
+                    if($googel_sheet->cancel_booking_info() == true) return;
+
                     // start booking
                     $googel_sheet->handle();
                 }

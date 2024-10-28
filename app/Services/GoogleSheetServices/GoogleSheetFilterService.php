@@ -227,8 +227,10 @@ class GoogleSheetFilterService extends GoogleSheetOperation {
             'current_question' => 'end'
         ]);
 
-        $message = "رقم الحجز الخاص بك ". $this->google_sheet?->id."\n";
-        $message.= "فى حال رغبتك اعادة جدولة الحجز ارسل "."001"."\n";
+        $message  = "شكرا لاختيارك خدماتنا";
+        $message .= "رقم الحجز الخاص بك ". $this->google_sheet?->id."\n";
+        $message .= "فى حال رغبتك اعادة جدولة الحجز ارسل "."001"."\n";
+        $message .= "فى حال رغبتك الغاء الحجز ارسل "."002"."\n";
         $this->send_message($message);
     }
 
@@ -250,6 +252,20 @@ class GoogleSheetFilterService extends GoogleSheetOperation {
                 $this->google_sheet = null;
             }
         }
+    }
+
+    public function cancel_booking_info(){
+        if($this->message === '002'){
+            if($this->google_sheet){
+                $this->delete_selected_row($this->google_sheet?->id);
+                $this->google_sheet->delete();
+                $this->google_sheet = null;
+            }
+
+            return true;
+        }
+
+        return false;
     }
 
     public function send_message($message){
