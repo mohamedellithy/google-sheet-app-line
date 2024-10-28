@@ -73,8 +73,8 @@ class GoogleSheetFilterService extends GoogleSheetOperation {
 
         $need_message = null;
         if($this->google_sheet->next_appointment == 'date'){
-            $need_message = "اختيار  تاريخ الحجز المتوفر لديك \n\n";
-            $need_message = "قم بالرد بكتابة رقم التاريخ المحدد \n\n";
+            $need_message  = "حدد اليوم المناسب لك \n\n";
+            $need_message .= "قم بالرد بكتابة رقم اليوم المحدد \n\n";
             foreach($this->booking_appointments as $key => $booking_appointment):
                 if(!in_array($booking_appointment[0],$prev_values_container)){
                     $prev_values_container[] = $booking_appointment[0];
@@ -82,8 +82,8 @@ class GoogleSheetFilterService extends GoogleSheetOperation {
                 }
             endforeach;
         } elseif($this->google_sheet->next_appointment == 'day'){
-            $need_message = "اختيار يوم الحجز المتوفر لديك \n\n";
-            $need_message = "قم بالرد بكتابة رقم اليوم المحدد \n\n";
+            $need_message = "حدد التاريخ المناسب لك \n\n";
+            $need_message .= "قم بالرد بكتابة رقم التاريخ المحدد \n\n";
             if(isset($this->booking_appointments[$this->message][0])):
                 $have_valid_date = [];
                 foreach($this->booking_appointments as $key => $booking_day):
@@ -115,8 +115,8 @@ class GoogleSheetFilterService extends GoogleSheetOperation {
                 return;
             endif;
         } elseif($this->google_sheet->next_appointment == 'times'){
-            $need_message = "اختيار الوقت المتوفر لديك \n\n";
-            $need_message = "قم بالرد بكتابة رقم الوقت المحدد \n\n";
+            $need_message = "حدد الوقت المناسب لك \n\n";
+            $need_message .= "قم بالرد بكتابة رقم الوقت المحدد \n\n";
             if(isset($this->booking_appointments[$this->message][0])):
                 foreach($this->booking_appointments as $key => $booking_times):
                     if($booking_times[1] == $this->booking_appointments[$this->message][1]):
