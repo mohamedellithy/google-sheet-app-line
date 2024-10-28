@@ -260,6 +260,9 @@ class GoogleSheetFilterService extends GoogleSheetOperation {
                 $this->delete_selected_row($this->google_sheet?->id);
                 $this->google_sheet->delete();
                 $this->google_sheet = null;
+
+                $message = "تم الغاء الحجز الخاص بك بنجاح";
+                $this->send_message($message);
             }
 
             return true;
