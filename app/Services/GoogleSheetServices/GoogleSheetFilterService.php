@@ -227,7 +227,7 @@ class GoogleSheetFilterService extends GoogleSheetOperation {
             'current_question' => 'end'
         ]);
 
-        $message  = "شكرا لاختيارك خدماتنا";
+        $message  = "شكرا لاختيارك خدماتنا \n";
         $message .= "رقم الحجز الخاص بك ". $this->google_sheet?->id."\n";
         $message .= "فى حال رغبتك اعادة جدولة الحجز ارسل "."001"."\n";
         $message .= "فى حال رغبتك الغاء الحجز ارسل "."002"."\n";
