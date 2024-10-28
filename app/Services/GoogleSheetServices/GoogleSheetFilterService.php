@@ -51,8 +51,10 @@ class GoogleSheetFilterService extends GoogleSheetOperation {
             foreach($this->booking_appointments as $key => $booking_times):
                 if($booking_times[0] == $this->values_sheet['date']){
                     if(isset($booking_times[$this->message])){
-                        $question_validate_replay = 1;
-                        $this->save_data($this->google_sheet->next_appointment,$booking_times[$this->message]);
+                        if($this->validate_count_appointments()){
+                            $question_validate_replay = 1;
+                            $this->save_data($this->google_sheet->next_appointment,$booking_times[$this->message]);
+                        }
                         break;
                     }
                 }
@@ -144,6 +146,19 @@ class GoogleSheetFilterService extends GoogleSheetOperation {
         $this->google_sheet->update([
             'value' => $this->values_sheet
         ]);
+    }
+
+    public function validate_count_appointments(){
+        $count = GoogleSheetAutoReplay::whereJsonContains('value->date',$this->values_sheet['date'])
+        ->whereJsonContains('value->day',$this->values_sheet['day'])
+        ->whereJsonContains('value->times',$this->values_sheet['times'])->count();
+
+        if($count > 3){
+            $this->novalid_massage();
+            return false;
+        }
+
+        return true;
     }
 
     public function handle(){
